@@ -1,0 +1,19 @@
+# Keys and secrets
+*.pem
+*.key
+*.ppk
+.env
+.env.*
+!.env.example
+*credentials*
+*secret*
+
+# Wazuh clone and generated certs
+wazuh-docker/
+config/**/wazuh_indexer_ssl_certs/
+
+# OS and editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
