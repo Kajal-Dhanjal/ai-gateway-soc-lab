@@ -16,12 +16,13 @@ Read this first every session. Update it last.
 - Docker 29.10.0 installed, hello-world passed, ubuntu user added to the docker group.
 - Wazuh 4.14.10 single node running in Docker (manager, indexer, dashboard).
 - `admin` password changed; dashboard login through the SSH tunnel works.
+- `wazuh-wui` (API) password changed; API returns a token with the new password.
 
 ## Next step (one action)
-Change the API user (`wazuh-wui`) password.
+Enrol one agent. Layer 1 is done when it reports.
 
 ## Then
-1. Enrol one agent. Layer 1 is done when it reports.
+1. Rotate both passwords to long random ones from a password manager before anything faces the internet.
 
 ## Blockers
 - None.
@@ -36,4 +37,4 @@ Change the API user (`wazuh-wui`) password.
 | Plan | AWS Free plan |
 | Credits left | US$100.00 |
 | Free period ends | 2027-05-22 |
-| Instance state | Running (stop at end of session) |
+| Instance state | Stopped (2026-11-22). Public IP changes on next start |

@@ -131,6 +131,51 @@ Success looks like `Clusterstate: GREEN`, a `SUCC` line for each of the 10 confi
 
 Never put the password in this repo.
 
+## 8. Change the API user (`wazuh-wui`) password
+
+Source: [Changing the default password of Wazuh users](https://documentation.wazuh.com/current/deployment-options/docker/changing-default-password.html), checked 2026-11-22.
+
+`wazuh-wui` is the account the dashboard uses to reach the manager's API (port 55000).
+
+The password must be 8 to 64 characters with an upper case letter, a lower case letter, a number and a symbol, or the manager won't start. Use `!` or `_` as the symbol.
+
+Edit with `nano`, not `sed`: the default contains `.` and `*`, which `sed` treats as wildcards.
+
+From `~/wazuh-docker/single-node`:
+
+```bash
+# See the current values
+grep -n "API_PASSWORD" docker-compose.yml
+grep -n "password" config/wazuh_dashboard/wazuh.yml
+
+# Change password: under hosts
+nano config/wazuh_dashboard/wazuh.yml
+
+# Change every API_PASSWORD= line (under wazuh.manager and wazuh.dashboard)
+nano docker-compose.yml
+
+# All three values must match before restarting
+grep -n "API_PASSWORD" docker-compose.yml
+grep -n "password" config/wazuh_dashboard/wazuh.yml
+
+docker compose down
+docker compose up -d
+```
+
+Wait about two minutes and refresh the dashboard. An API connection error means the values don't match.
+
+Check the API accepts the new password. A response containing `"token"` means it works:
+
+```bash
+curl -k -u 'wazuh-wui:<your-api-password>' -X POST "https://localhost:55000/security/user/authenticate"
+```
+
+Then clear this session's shell history so no password is saved to `~/.bash_history` on logout:
+
+```bash
+history -c
+```
+
 Logged in with the new password:
 
 ![Wazuh dashboard overview, no agents yet](images/02-wazuh-dashboard.png)
@@ -138,5 +183,5 @@ Logged in with the new password:
 ## Done when
 
 - [x] Dashboard loads with the new password
-- [x] Default password changed (`admin`)
+- [x] Default passwords changed (`admin`, `wazuh-wui`)
 - [ ] One agent reporting

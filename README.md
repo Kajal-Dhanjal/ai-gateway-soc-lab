@@ -37,7 +37,7 @@ Follow the docs in order.
 | 6 | [Detections](docs/06-detections.md) | Not started |
 | 7 | [Cost and teardown](docs/07-cost-teardown.md) | Not started |
 
-Why each choice was made: [docs/why.md](docs/why.md). Stuck? See [troubleshooting](docs/troubleshooting.md).
+Start and stop the lab: [docs/runbook.md](docs/runbook.md). Why each choice was made: [docs/why.md](docs/why.md). Stuck? See [troubleshooting](docs/troubleshooting.md).
 
 ## Repo map
 
