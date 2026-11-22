@@ -6,7 +6,7 @@ Built by [Kajal Dhanjal](https://linkedin.com/in/kajal-dhanjal-8a79b8311). Write
 
 ## Status
 
-Current layer: **1, SOC**. Full handover in [STATUS.md](STATUS.md).
+Layer 1 (SOC) built. Paused before the gateway and model layers. Full handover in [STATUS.md](STATUS.md).
 
 ## Architecture
 

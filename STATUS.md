@@ -4,7 +4,7 @@ Read this first every session. Update it last.
 
 **Last session:** 2026-11-22
 **Layer:** 1 SOC | 2 AI | 3 Gateway | 4 Pipeline | 5 Detections
-**Current:** 1 SOC
+**Current:** 1 SOC. Paused 2026-11-22, waiting on mentor answers below before layers 2 and 3.
 
 ## Done last session
 - AWS account created through the new sign-up (project based). Free plan confirmed.
