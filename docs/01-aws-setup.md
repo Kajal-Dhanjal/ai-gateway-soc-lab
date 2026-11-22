@@ -42,26 +42,44 @@ Optional on the Free plan, which can't charge. Set one before upgrading to the P
 
 ## 4. Launch the instance
 
-EC2 > Launch instance.
+EC2 > Launch instance. Work down the page in this order. Checked against a live launch on 2026-11-22.
 
-| Setting | Value | Why |
-|---|---|---|
-| Name | `wazuh-lab` | |
-| Image | Ubuntu Server 26.04 LTS, 64-bit x86 (Quick Start default) | Docker Engine supports 26.04 |
-| Instance type | `m7i-flex.large` (2 vCPU, 8 GiB) | Largest Free plan type. See [decision 0001](../decisions/0001-aws-free-plan.md) |
-| Key pair | New, ED25519, `.pem` | Save it. It can't be downloaded again |
-| Security group | New, named `wazuh-lab-sg` | Easy to find later |
-| Inbound | SSH, source type **My IP** (the wizard defaults to Anywhere, 0.0.0.0/0) | Dashboard never faces the internet |
-| HTTP / HTTPS | Unticked | |
-| Storage | 50 GiB gp3, Encrypted, KMS key `aws/ebs` (Configure storage > Advanced) | Wazuh's minimum disk; encrypted at rest |
+### Name and image
 
-Free plan instance types: [Amazon EC2 Free Tier usage](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-free-tier-usage.html), checked 2026-11-21.
+- Name: `wazuh-lab`
+- Image: Ubuntu Server 26.04 LTS, 64-bit x86 (the Quick Start default). Docker Engine supports 26.04.
 
-Checked against a live launch on 2026-11-22.
+### Instance type
+
+`m7i-flex.large` (2 vCPU, 8 GiB). The wizard defaults to `t3.micro` (1 GiB), which is too small for Wazuh. `m7i-flex.large` is the largest Free plan type. See [decision 0001](../decisions/0001-aws-free-plan.md).
+
+Source: [Amazon EC2 Free Tier usage](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-free-tier-usage.html), checked 2026-11-21.
+
+### Key pair
+
+Create new: `wazuh-lab`, ED25519, `.pem`. Save it. It can't be downloaded again.
+
+Leave **Enable default AWS service access** unticked. The instance needs no AWS permissions.
+
+### Network settings
+
+- Security group: create new, named `wazuh-lab-sg`.
+- Inbound rule: SSH, source type **My IP**. The wizard defaults to Anywhere (0.0.0.0/0), which lets the whole internet try to log in.
+- HTTP and HTTPS: unticked. The dashboard is reached through an SSH tunnel and never faces the internet.
 
 ![Inbound rule: SSH from My IP only](images/01-sg-ssh-my-ip.png)
 
+### Configure storage
+
+50 GiB, gp3. The wizard defaults to 8 GiB, below Wazuh's 50 GB minimum.
+
+Click **Advanced** and set **Encrypted** to Encrypted, KMS key `(default) aws/ebs`. The wizard defaults to not encrypted.
+
 ![Root volume: 50 GiB gp3, encrypted with aws/ebs](images/01-ebs-encrypted.png)
+
+### Launch
+
+Check the Summary panel shows `m7i-flex.large` and 50 GiB, then **Launch instance**.
 
 ## 5. Connect
 
