@@ -12,12 +12,12 @@ Current layer: **1, SOC**. Full handover in [STATUS.md](STATUS.md).
 
 ```mermaid
 flowchart LR
-  U[User or app] --> G[AI gateway]
-  G --> M[AI model]
-  G -- request and response logs --> A[Wazuh agent]
-  A --> WM[Wazuh manager]
-  WM --> WI[Wazuh indexer]
-  WI --> WD[Wazuh dashboard]
+  U["User or app"] --> G["AI gateway"]
+  G --> M["AI model"]
+  G -->|"request and response logs"| A["Wazuh agent"]
+  A --> WM["Wazuh manager"]
+  WM --> WI["Wazuh indexer"]
+  WI --> WD["Wazuh dashboard"]
 ```
 
 Details in [docs/00-architecture.md](docs/00-architecture.md).
@@ -29,8 +29,8 @@ Follow the docs in order.
 | Step | Doc | State |
 |---|---|---|
 | 0 | [Architecture](docs/00-architecture.md) | Draft |
-| 1 | [AWS setup](docs/01-aws-setup.md) | In progress |
-| 2 | [Wazuh](docs/02-wazuh.md) | Not started |
+| 1 | [AWS setup](docs/01-aws-setup.md) | Done |
+| 2 | [Wazuh](docs/02-wazuh.md) | In progress |
 | 3 | [AI model](docs/03-ai-model.md) | Not started |
 | 4 | [AI gateway](docs/04-ai-gateway.md) | Not started |
 | 5 | [Log pipeline](docs/05-log-pipeline.md) | Not started |

@@ -8,7 +8,7 @@ A SOC that watches its own AI. The gateway sits between users and the model, log
 
 | Layer | Component | Runs on | State |
 |---|---|---|---|
-| 1 SOC | Wazuh single node (manager, indexer, dashboard) in Docker | AWS EC2 | Not started |
+| 1 SOC | Wazuh single node (manager, indexer, dashboard) in Docker | AWS EC2 | In progress |
 | 2 AI | Model | Open question | Not started |
 | 3 Gateway | AI gateway | Open question | Not started |
 | 4 Pipeline | Gateway logs into Wazuh | Wazuh agent on the gateway host | Not started |
@@ -18,12 +18,12 @@ A SOC that watches its own AI. The gateway sits between users and the model, log
 
 ```mermaid
 flowchart LR
-  U[User or app] --> G[AI gateway]
-  G --> M[AI model]
-  G -- request and response logs --> A[Wazuh agent]
-  A --> WM[Wazuh manager]
-  WM --> WI[Wazuh indexer]
-  WI --> WD[Wazuh dashboard]
+  U["User or app"] --> G["AI gateway"]
+  G --> M["AI model"]
+  G -->|"request and response logs"| A["Wazuh agent"]
+  A --> WM["Wazuh manager"]
+  WM --> WI["Wazuh indexer"]
+  WI --> WD["Wazuh dashboard"]
 ```
 
 ## Access

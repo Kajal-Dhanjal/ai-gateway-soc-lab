@@ -14,9 +14,39 @@ Source for every step on this page: [Wazuh Docker deployment](https://documentat
 
 ## 1. Install Docker
 
-Follow [Docker Engine on Ubuntu](https://docs.docker.com/engine/install/ubuntu/).
+Source: [Docker Engine on Ubuntu](https://docs.docker.com/install/linux/ubuntu/), checked 2026-11-22. Ubuntu 26.04 is supported.
 
-> TODO: record the exact commands used on the first run.
+```bash
+# Docker's GPG key
+sudo apt update
+sudo apt install -y ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Docker's apt repository
+sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
+Types: deb
+URIs: https://download.docker.com/linux/ubuntu
+Suites: $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")
+Components: stable
+Architectures: $(dpkg --print-architecture)
+Signed-By: /etc/apt/keyrings/docker.asc
+EOF
+sudo apt update
+
+# Install
+sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+# Verify
+sudo docker run hello-world
+```
+
+Optional, run Docker without `sudo` (log out and back in after):
+
+```bash
+sudo usermod -aG docker $USER
+```
 
 ## 2. Kernel setting
 
