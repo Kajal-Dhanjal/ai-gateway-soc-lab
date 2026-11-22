@@ -14,12 +14,14 @@ Read this first every session. Update it last.
 - Spend limit skipped: the Free plan can't charge. Set one before any upgrade to the Paid plan.
 - EC2 instance `wazuh-lab` launched (m7i-flex.large, Ubuntu 26.04, 50 GiB encrypted gp3, SSH from my IP only). SSH works.
 - Docker 29.10.0 installed, hello-world passed, ubuntu user added to the docker group.
+- Wazuh 4.14.10 single node running in Docker (manager, indexer, dashboard).
+- `admin` password changed; dashboard login through the SSH tunnel works.
 
 ## Next step (one action)
-Install Wazuh per [docs/02-wazuh.md](docs/02-wazuh.md), steps 2 to 5.
+Change the API user (`wazuh-wui`) password.
 
 ## Then
-1. Log in through the SSH tunnel and change the default password.
+1. Enrol one agent. Layer 1 is done when it reports.
 
 ## Blockers
 - None.

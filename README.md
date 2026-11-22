@@ -37,13 +37,13 @@ Follow the docs in order.
 | 6 | [Detections](docs/06-detections.md) | Not started |
 | 7 | [Cost and teardown](docs/07-cost-teardown.md) | Not started |
 
-Stuck? See [troubleshooting](docs/troubleshooting.md).
+Why each choice was made: [docs/why.md](docs/why.md). Stuck? See [troubleshooting](docs/troubleshooting.md).
 
 ## Repo map
 
 | Folder | Holds |
 |---|---|
-| `docs/` | Step by step guides, `images/` for screenshots |
+| `docs/` | Step by step guides, [why.md](docs/why.md) for the reasoning and research, `images/` for screenshots |
 | `decisions/` | One page per design decision |
 | `buildlog/` | Dated session notes |
 | `config/` | Wazuh and gateway config |

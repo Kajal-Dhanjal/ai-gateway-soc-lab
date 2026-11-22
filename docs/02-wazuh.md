@@ -83,12 +83,60 @@ The indexer takes about a minute. Errors about port 9200 in that minute are expe
 
 Through the SSH tunnel from [01-aws-setup.md](01-aws-setup.md): `https://localhost:8443`.
 
-Default login `admin` / `SecretPassword`. Change it straight away using the Wazuh docs section "Changing the default password of Wazuh users".
+Default login `admin` / `SecretPassword`. It's published in Wazuh's docs, so change it straight away. Log out of the dashboard first.
 
-> TODO: record the password change steps on the first run.
+## 7. Change the `admin` password
+
+Source: [Changing the default password of Wazuh users](https://documentation.wazuh.com/current/deployment-options/docker/changing-default-password.html), checked 2026-11-22.
+
+`admin` is both the dashboard login and the account the manager and dashboard use to reach the indexer (`INDEXER_PASSWORD`).
+
+Avoid `$ / & # ' "` and spaces in the password. They need escaping in these files.
+
+From `~/wazuh-docker/single-node`:
+
+```bash
+docker compose down
+
+# Hash the new password (type it at the prompt, copy the output)
+docker run --rm -ti wazuh/wazuh-indexer:4.14.10 bash /usr/share/wazuh-indexer/plugins/opensearch-security/tools/hash.sh
+
+# Under admin:, replace the hash: value with the new hash
+nano config/wazuh_indexer/internal_users.yml
+
+# Swap the old password in the compose file. Type your real password, not a placeholder
+sed -i 's/SecretPassword/<your-new-password>/g' docker-compose.yml
+grep -n INDEXER_PASSWORD docker-compose.yml   # two lines, both the new password
+
+docker compose up -d
+docker exec -it single-node-wazuh.indexer-1 bash
+```
+
+Inside the indexer container:
+
+```bash
+export INSTALLATION_DIR=/usr/share/wazuh-indexer
+export CONFIG_DIR=$INSTALLATION_DIR/config
+CACERT=$CONFIG_DIR/certs/root-ca.pem
+KEY=$CONFIG_DIR/certs/admin-key.pem
+CERT=$CONFIG_DIR/certs/admin.pem
+export JAVA_HOME=/usr/share/wazuh-indexer/jdk
+
+# Wait 1 to 5 minutes after start, then:
+bash /usr/share/wazuh-indexer/plugins/opensearch-security/tools/securityadmin.sh -cd $CONFIG_DIR/opensearch-security/ -nhnv -cacert $CACERT -cert $CERT -key $KEY -p 9200 -icl
+exit
+```
+
+Success looks like `Clusterstate: GREEN`, a `SUCC` line for each of the 10 config types, and `Done with success`.
+
+Never put the password in this repo.
+
+Logged in with the new password:
+
+![Wazuh dashboard overview, no agents yet](images/02-wazuh-dashboard.png)
 
 ## Done when
 
-- [ ] Dashboard loads
-- [ ] Default password changed
+- [x] Dashboard loads with the new password
+- [x] Default password changed (`admin`)
 - [ ] One agent reporting
